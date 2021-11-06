@@ -2,10 +2,10 @@
 Messing around with a challenge I got via email,  this was done in around 6hrs of work: 
 
 * **Terraform**, runs as intended, might need to change lines 40, 49 & 70 to make it work in any other region =! us-west-1
-* **MySQL**, Schema was built, found it in several online tutorials including the official MySQL documentation ****
+* **MySQL**, Schema was built, found it in several online tutorials including the official MySQL documentation 
 * **App**, This is actually my 1st attemp at builting an API, was a nice excercise however its not pulling the data from MySQL its hardcoded in the Json Itself 
 
-As you can see its not perfect but Im pretty sure is enough to get a conversation going, challenge is vague in many ways and It can take up to 6 hours or 1 week, so Im calling it after 6hrs
+Im pretty sure is enough to get a conversation going, challenge is vague in many ways and It can take up to 6 hours or 1 week or several months if taken seriously, so Im calling it a day after 6hrs, heres I have documented my answers the challenge bulletpoints:
 
 
 ## A) Create a public repo for this exercise
@@ -17,15 +17,15 @@ This can be found here https://github.com/vazeri/cloud-code-challenge/tree/main/
 In order to run the terraform script AWS secrets have been setup as environment variables 
 **Debian, Ubuntu**
 ```console
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
+export AWS_ACCESS_KEY_ID=***********************
+export AWS_SECRET_ACCESS_KEY=*******************
 ```
 
 ## C) Write a script to deploy the application
 A rest API was generatrd to serve as an aplication endpoint, it was provided as a JSON file, 
 https://github.com/vazeri/cloud-code-challenge/tree/main/API
 
-This can be deployed using using the EC2 starting parameters, user thata on the instance launch i didnt actually went to finish this part but It would be something around this:
+This can be deployed directly on the system startup using a bash shell script using the EC2 starting parameters on the instance launch I drafted a possible solution, didnt actually went to finish this part but It would look something around this:
 
 ```console
 if ${abortStartup}; then
@@ -65,10 +65,22 @@ else
 
 ## D) Security upgrades need to be performed every now and then 
 
-This can be achieved by installing the AWS SSM agent in the image, this already comes prebuilt into the Ubuntu and AWS based Images, however a role might need to be added for it to work 
+This can be achieved by installing both AWS SSM agent for Operative system updates
 
-Since we are talking baout inmutable infrastructure here its recommended the agent is setup to run updates weeklty via de SSM Console 
+```
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
+```
+AWS Inspector Agent for security vulnerabilities in the infrastructure 
 
+```
+wget https://inspector-agent.amazonaws.com/linux/latest/install
+sudo bash install
+rm -f install
+```
+
+Once setup these tasks needs to be delegated to the operational team for maintenance and keeping the infrastructure and OS layer of the system udpated 
 
 
 # Extra points
