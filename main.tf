@@ -81,19 +81,24 @@ resource "aws_instance" "example" {
   }
 }
 # ---------------------------------------------------------------------------------------------------------------------
-# CREATE THE RDS DATABASE IN ANOTHER PROVATE VPC
+# CREATE THE RDS DATABASE
 # ---------------------------------------------------------------------------------------------------------------------
-resource "aws_rds_cluster" "default" {
-  cluster_identifier      = "code-challenge-aurora-cluster"
-  engine                  = "aurora-mysql"
-  engine_version          = "5.7.mysql_aurora.2.03.2"
-  availability_zones      = ["us-west-1b", "us-west-1c"]
-  database_name           = "mydb"
-  master_username         = "foo"
-  master_password         = "bar12345678"
-  backup_retention_period = 5
-  preferred_backup_window = "07:00-09:00"
+resource "aws_db_instance" "database" {
+  allocated_storage    = 10
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  name                 = "mydb"
+  username             = "foo"
+  password             = "foobarbaz"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
   db_subnet_group_name = "code-challenge-subnet-group"
+
+  tags = {
+    Name = "code-challenge-database"
+  }
 }
 
- 
+
+
