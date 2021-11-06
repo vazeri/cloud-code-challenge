@@ -52,9 +52,13 @@ resource "aws_subnet" "private-2" {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# CREATING SUBNET GROUP, each DB Subnet Group should have at least one subnet for every Availability Zone in a given Region.
+# ---------------------------------------------------------------------------------------------------------------------
+
 resource "aws_db_subnet_group" "code-challenge-subnet-group" {
 	name = "code-challenge-subnet-group"
-	subnet_ids = ["${aws_subnet.private-2.id}"]
+	subnet_ids = ["${aws_subnet.private-1.id}","${aws_subnet.private-2.id}"]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -82,7 +86,7 @@ resource "aws_instance" "example" {
 resource "aws_db_instance" "database" {
   identifier	       = "code-challenge-rds-cluster"
   allocated_storage    = 10
-  engine               = "mysql"
+  engine               = "aurora-postgresql"
   engine_version       = "5.7"
   instance_class       = "db.t3.micro"
   name                 = "mydb"
