@@ -54,7 +54,7 @@ resource "aws_subnet" "private-2" {
 
 resource "aws_db_subnet_group" "code-challenge-subnet-group" {
 	name = "code-challenge-subnet-group"
-	subnet_ids = ["${aws_subnet.private-1.id}", "${aws_subnet.private-2.id}"]
+	subnet_ids = ["${aws_subnet.private-2.id}"]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -80,6 +80,7 @@ resource "aws_instance" "example" {
 # CREATE THE RDS DATABASE IN ANOTHER PROVATE VPC
 # ---------------------------------------------------------------------------------------------------------------------
 resource "aws_db_instance" "database" {
+  identifier	       = "code-challenge-rds-cluster"
   allocated_storage    = 10
   engine               = "mysql"
   engine_version       = "5.7"
