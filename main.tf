@@ -94,11 +94,19 @@ resource "aws_db_instance" "database" {
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
   db_subnet_group_name = "code-challenge-subnet-group"
-
   tags = {
     Name = "code-challenge-database"
   }
+
+resource "null_resource" "setup_db" {
+  depends_on = ["aws_db_instance.my_db"] 
+  provisioner "local-exec" {
+    command = "mysql -u foo -p foobarbaz -h ${aws_db_instance.my_db.address} < file.sql"
+  }
 }
 
-
+}
+# ---------------------------------------------------------------------------------------------------------------------
+# CREATE SCHEMA WITHIN THE RDS DATABASE
+# ---------------------------------------------------------------------------------------------------------------------
 
