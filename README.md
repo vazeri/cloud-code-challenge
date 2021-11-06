@@ -8,10 +8,10 @@ Messing around with a challenge I got via email,  this was done in around 6hrs o
 As you can see its not perfect but Im pretty sure is enough to get a conversation going, challenge is vague in many ways and It can take up to 6 hours or 1 week, so Im calling it after 6hrs
 
 
-# A) Create a public repo for this exercise
+## A) Create a public repo for this exercise
 https://github.com/vazeri/cloud-code-challenge
 
-# B) Write a script to deploy the Infrastructure as code 
+## B) Write a script to deploy the Infrastructure as code 
 This can be found here https://github.com/vazeri/cloud-code-challenge/tree/main/terraform
 
 In order to run the terraform script AWS secrets have been setup as environment variables 
@@ -21,7 +21,7 @@ export AWS_ACCESS_KEY_ID=
 export AWS_SECRET_ACCESS_KEY=
 ```
 
-# C) Write a script to deploy the application
+## C) Write a script to deploy the application
 A rest API was generatrd to serve as an aplication endpoint, it was provided as a JSON file, 
 https://github.com/vazeri/cloud-code-challenge/tree/main/API
 
@@ -63,7 +63,7 @@ else
 ```
 
 
-# D) Security upgrades need to be performed every now and then 
+## D) Security upgrades need to be performed every now and then 
 
 This can be achieved by installing the AWS SSM agent in the image, this already comes prebuilt into the Ubuntu and AWS based Images, however a role might need to be added for it to work 
 
@@ -71,13 +71,13 @@ Since we are talking baout inmutable infrastructure here its recommended the age
 
 
 
-## Extra points
+# Extra points
 
-# 1 How would you expose your app to the internet 
+## 1) How would you expose your app to the internet 
 
 DNS record pointing to a Loadbalancer in a public subnet, that can re route the trafic to the private subnets 
 
-# 2 What would you use to dynamacaly scale your application
+## 2) What would you use to dynamacaly scale your application
 
 Load balancers for both EC2 instances that have the App and migrate the database to an Aurora Database isntead of a simple RDS database 
 
@@ -98,17 +98,17 @@ resource "aws_rds_cluster" "default" {
 }
 ```
 
-# 3 How would you grant access to a developer to the database 
+## 3) How would you grant access to a developer to the database 
 
 Create a pipeline of environments, DEV -> UAT -> PROD, Grant developers full access to DEV and UAT, and provide them tools to restore production snapshots to the DEV & UAT environments in case the screw something up by mistake 
 
-# 4 Build v2 of the application 
+## 4) Build v2 of the application 
 
 Would love to but v1 wasnt even finished and its time for dinner, family requires attention too!
 
 
 
-# References
+## References
 
 https://www.linkedin.com/pulse/launching-infrastructure-aws-custom-vpc-internet-gateway-agarwal?trk=public_profile_article_view
 
